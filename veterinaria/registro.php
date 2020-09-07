@@ -31,6 +31,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="ingresar_mascota.php">Buscar afliliado</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="ingresoM.php">modificar Mascota</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="ingresoC.php">modificar o eliminar cliente</a>
+            </li>
              <li class="nav-item active">
                 <a class="nav-link" href="index.php">Salir</a>
             </li>

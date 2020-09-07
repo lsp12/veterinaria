@@ -2,8 +2,8 @@
 ob_start();
 include_once("conexion.php");
 require_once("ingreso.php");
+$id=$_GET['id'];
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -57,53 +57,25 @@ require_once("ingreso.php");
         <div class="container">
             <div class="row d-flex justify-content-center">
                 <div class="m-5 p-3 text-white rounded col-6" style="background-color: rgba(218, 210, 201, 0.808);">
-                    <form action="" method="post">
-                        <div class="form-row justify-content-center">
-                            <h2>Buscar afiliado</h2>
-                        </div>
-                        <div class="form-group">
-                            <label for="NumeroCD">Numero de cedula</label>
-                            <input type="text" class="form-control" name="ced" id="NumeroCD" required >
-                            <div class="form-group P-5"> 
-                                <button type="submit" class="btn btn-primary" name="btn4">buscar cliente</button>
-                            </div>
-                        
-                        </form>
-                        
-                            <?php 
-                            if(isset($_POST['btn4'])){
-                            $ced=$_POST['ced'];
-                            $array=buscar($ced);
-
-                        
-                            ?><input class="form-control" type="text" placeholder="<?php echo ($array[0]['nombre']);?>" readonly>
-                            <?php
-                            }?>
-                            <form method="POST">
+                
+                            <form action="#" method="POST">
                                 
                                 <div>
                                     <div class="form-row justify-content-center">
-                                <h2>insertar o actualizar Mascota</h2>
+                                <h2>Modificar Mascota</h2>
                             </div>
-                            <div class="form-row">
-                            <div class="form-group col">
-                                    <label for="NombreM">Cedula del cliente</label>
-                                    <input type="text" requiredname="Cedula" id="" name="cedulaClie" class="form-control">
-                                </div>
-                            </div>
+                            
 
                             <div class="form-row">
-                                
-                                <div class="form-group col-md-6">
-                                    <label for="NombreM">nombre</label>
+                            <div class="form-group col-6">
+                                    <label for="NombreM">Nombre</label>
                                     <input type="text" requiredname="Cedula" id="" name="nmascota"class="form-control">
                                 </div>
+
                                 <div class="form-group col-md-6">
                                     <label for="NombreM">Edad</label>
                                     <input type="text"required id="" class="form-control" name="emascota">
                                 </div>
-                                
-                            
                             <div class="form-group col-md-6">
                                 <label for="inputState">Tipo de Animal</label>
                                 <select id="inputState" required name="tipo"class="form-control">
@@ -132,22 +104,20 @@ require_once("ingreso.php");
                                 <textarea class="form-control" name="descripcion"id="exampleFormControlTextarea1" rows="5"></textarea>
                             </div>
                             <div class="form-group p-3">
+                            <button type="submit" name="boton3"class="btn btn-primary">actualizar</button>
                             
-                            <button type="submit" name="boton2"class="btn btn-primary">insertar mascota</button>
                             </div>
                             <?php
-                                if(isset($_POST['boton2'])){
-                                    $cedulaClie=$_POST['cedulaClie'];
+                                if(isset($_POST['boton3'])){
                                     $nmascota=strtoupper($_POST['nmascota']);
                                     $edad=$_POST['emascota'];
                                     $tipo=strtoupper($_POST['tipo']);
                                     $sexo=strtoupper($_POST['sexo']);
                                     $descripcion=strtoupper($_POST['descripcion']);
                                     
-                                    insertarMascota($nmascota, $edad, $tipo, $sexo, $descripcion, $cedulaClie);
-                                    
-                                    
+                                    actualizarMascota($nmascota, $edad, $tipo, $sexo, $descripcion, $id);
                                 }
+                                
                             ?>
                             </div>
                         </form> 

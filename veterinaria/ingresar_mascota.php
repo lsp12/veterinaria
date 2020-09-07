@@ -28,6 +28,7 @@ function recorrer($query){
     </style>
 </head>
 <body class="fondo">
+    <div>
     <nav class="navbar navbar-dark bg-dark">
         <!-- Navbar content -->
         <a class="navbar-brand" href="#">Busquedad de afiliado</a>
@@ -41,6 +42,12 @@ function recorrer($query){
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="ingresar_mascota.php">Buscar afliliado</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="ingresoM.php">modificar Mascota</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="ingresoC.php">modificar o eliminar cliente</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="index.php">Salir</a>
@@ -78,11 +85,12 @@ function recorrer($query){
                             <th scope="col">Nombre de Mascota</th>
                             <th scope="col">Tipo de Mascota</th>
                             <th scope="col">Nombre del dueño</th>
+                            <th scope="col">Accion</th>
                           </tr>
                         </thead>
                         <tbody>
                             <?php if (!isset($_POST['btn'])) {
-                                $consulta="SELECT clientes.nombre, mascotas.nombreM, mascotas.tipoAnimal FROM clientes INNER JOIN mascotas ON clientes.id_usuario = mascotas.id_usuario";
+                                $consulta="SELECT clientes.nombre, mascotas.nombreM, mascotas.tipoAnimal, mascotas.id FROM clientes INNER JOIN mascotas ON clientes.id_usuario = mascotas.id_usuario";
                                 $resultado=mysqli_query($con,$consulta);
                                 foreach ($resultado as $r) {
                             ?>
@@ -90,11 +98,13 @@ function recorrer($query){
                                 <td><?php echo($r['nombreM']);?></td>
                                 <td><?php echo($r['tipoAnimal']);?></td>
                                 <td><?php echo($r['nombre']);?></td>
+                                <td><a class="btn btn-primary" href="valid.php?id=<?php echo($r['id']);?>" role="button">ELIMINAR</a>
+                                <a class="btn btn-primary" href="Modificar.php?id=<?php echo($r['id']);?>" role="button">Modificar</a></td>
                             </tr>
                             <?php }
                         } else{
                                 $ced=$_POST['ced'];
-                            $cons="SELECT clientes.nombre, mascotas.nombreM, mascotas.tipoAnimal FROM clientes INNER JOIN mascotas ON clientes.id_usuario = mascotas.id_usuario WHERE clientes.cedula = '$ced'";
+                            $cons="SELECT clientes.nombre, mascotas.nombreM, mascotas.tipoAnimal, mascotas.id FROM clientes INNER JOIN mascotas ON clientes.id_usuario = mascotas.id_usuario WHERE clientes.cedula = '$ced'";
                             $res=mysqli_query($con,$cons);
                                 if(mysqli_num_rows($res)>0){
                                 foreach ($res as $e) {
@@ -103,6 +113,8 @@ function recorrer($query){
                             <td><?php echo($e['nombreM']);?></td>
                                 <td><?php echo($e['tipoAnimal']);?></td>
                                 <td><?php echo($e['nombre']);?></td>
+                                <td><a class="btn btn-primary" href="valid.php?id=<?php echo($r['id']);?>" role="button">ELIMINAR</a></td>
+                                <td><a class="btn btn-primary" href="Modificar.php?id=<?php echo($r['id']);?>" role="button">Modificar</a></td>
                             </tr>
                             <?php }
                             }else{?>
@@ -112,7 +124,7 @@ function recorrer($query){
                         </tbody>
                       </table>
                       <div class="form-group">
-                        <a href="registro.php" class="btn btn-primary">Añadir nueva mascota</a>
+                        <a href="ingresoM.php" class="btn btn-primary">Añadir nueva mascota</a>
                     </div>
                 </div>
             </div>

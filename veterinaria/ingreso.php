@@ -15,45 +15,69 @@ function buscar($ced){
     return recorrer($res);
 }
 
-function eliminar($cd){
+function eliminar($id){
     global $con;
-    $consulta="DELETE FROM `clientes` WHERE `clientes`.`id_usuario` = $cd";
+    $consulta="DELETE FROM `clientes` WHERE `clientes`.`id_usuario` = $id";
     $ejecucion=mysqli_query($con,$consulta);
 }
 function eliminarMascota($cd){
     global $con;
-    $consulta="DELETE FROM `mascotas` WHERE `mascotas`.`id_usuario` = $cd";
+    $consulta="DELETE FROM `mascotas` WHERE `mascotas`.`id` = $cd";
     $ejecucion=mysqli_query($con,$consulta);
+    header("location: ingresar_mascota.php");
 }
-
-function actualizarCliente($id,$nombre,$apellido,$direccion,$correo,$cedula){
-    
+function eliminarCliente($ced){
     global $con;
-    $consulta="UPDATE `clientes` SET `nombre` = '$nombre', `apellido` = '$apellido', `direccion` = '$direccion', `correo electronico` = '$correo', `cedula` = '$cedula', `fecha_registro` = NOW() WHERE `clientes`.`id_usuario` = $id";
+    $aux=buscar($ced);
+    $id=$aux[0]['id_usuario'];
+    $consulta="DELETE FROM `clientes` WHERE `clientes`.`id_usuario` = $id";
     $ejecucion=mysqli_query($con,$consulta);
     if($ejecucion){
-        echo "Registro completado exitosamente";
+        header("location: ingresar_mascota.php");
+    }else{
+        echo "Error isern";
+    }
+}
+function actualizarCliente($nombre,$apellido,$direccion,$correo,$cedula){
+    $buscar=buscar($cedula);
+    $id=$buscar[0]['id_usuario'];
+    global $con;
+    $consulta="UPDATE clientes SET nombre = '$nombre', apellido = '$apellido', direccion = '$direccion', correo_electronico = '$correo', cedula = $cedula, fecha_registro = NOW() WHERE clientes.id_usuario = $id";
+    $ejecucion=mysqli_query($con,$consulta);
+    if($ejecucion){
+        header("location: ingresar_mascota.php"); 
     }else{
         echo "Error";
     }
-    header("location: registro.php");
+    
 }
+
+
 
 function actualizarMascota($nmascota, $edad, $tipo, $sexo, $descripcion, $id){
     global $con;
-    $consulta="UPDATE `mascotas` SET `nombreM` = '$nmascota', `edad` = '$edad', `tipoAnimal` = '$tipo', `sexo_mascota` = '$sexo', `problema` = '$descripcion' WHERE `mascotas`.`id` = $id";
+    $consulta="UPDATE mascotas SET nombreM = '$nmascota', edad = $edad, tipoAnimal = '$tipo', sexo_mascota = '$sexo', problema = '$descripcion' WHERE mascotas.id = $id";
     $ejecucion=mysqli_query($con,$consulta);
     if($ejecucion){
-        echo "Registro completado exitosamente";
+        header("location: ingresar_mascota.php");         
     }else{
-        echo "Error";
+        echo "<script>alert 'el cliente no existe'</script>";
     }
-    header("location: registro.php");
+    
 }
-function insertarMascota($nmascota, $edad, $tipo, $sexo, $descripcion, $id){
+function insertarMascota($nmascota, $edad, $tipo, $sexo, $descripcion, $cedulaClie){
     global $con;
-    $consulta="INSERT INTO mascotas values (NULL,'$id','$nmascota','$edad','$tipo','$sexo','$descripcion',NOW())";
+    $aux=buscar($cedulaClie);
+    echo var_dump($aux);
+    $id=$aux[0]['id_usuario'];
+    $consulta="INSERT INTO mascotas values (NULL,$id,'$nmascota',$edad,'$tipo','$sexo','$descripcion',NOW()) ";
     $resultado=mysqli_query($con,$consulta);
+    if($resultado){
+        echo "exitoso";
+        header("location: ingresar_mascota.php");         
+    }else{
+        echo "fallido";
+    }
     
 }
 ?>
